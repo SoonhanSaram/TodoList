@@ -1,4 +1,4 @@
-import { Children, useCallback, useState } from "react";
+import { children, useCallback, useState } from "react";
 import "./css/App.css";
 import TodoList from "./data/todoList";
 import Todo from "./data/todo";
@@ -16,10 +16,23 @@ function App() {
     setTodoList([...todoList, todo]);
     console.log(todoList);
   };
+  const ModalToggle = () => {
+    setModalOn(true);
+  };
+
+  const ListUpdate = (value, seq) => {
+    const findIndex = todoList.findIndex((todo) => todo.seq === seq);
+    const copiedtodoList = [...todoList];
+    copiedtodoList[findIndex].title = value;
+    console.log(copiedtodoList[findIndex].title);
+    setTodoList(copiedtodoList);
+    setModalOn(false);
+  };
 
   const deleteList = (seq) => {
     setTodoList(todoList.filter((todo) => todo.seq !== seq));
   };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -30,9 +43,19 @@ function App() {
         todoList={todoList}
         deleteList={deleteList}
         setModalOn={setModalOn}
-        modalOn={modalOn}
       />
-      <Modal show={modalOn} onHide={() => setModalOn(false)}></Modal>
+
+      <Modal
+        todo={todo}
+        setTodo={setTodo}
+        todoList={todoList}
+        ListUpdate={ListUpdate}
+        show={modalOn}
+        onHide={() => setModalOn(false)}
+        todoSeq={todo.seq}
+      >
+        {todo.title}
+      </Modal>
     </div>
   );
 }

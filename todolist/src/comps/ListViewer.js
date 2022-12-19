@@ -1,11 +1,12 @@
 import "../css/list.css";
 const ListViewer = (props) => {
-  const { todoList, deleteList, setModalOn, modalOn } = props;
+  const { todoList, deleteList, setModalOn } = props;
 
   const todoListView = todoList.map((todo) => {
     return (
       <tr className="todoTR" data-seq={todo.seq}>
         <td className="delete">&times;</td>
+        <td className="check">✔</td>
         <td className="title">{todo.title}</td>
         <td className="modify">수정</td>
       </tr>
@@ -16,15 +17,27 @@ const ListViewer = (props) => {
     const tbody = document.querySelector(".tbody");
     tbody?.addEventListener("click", (e) => {
       const modify = document.querySelector(".modify");
+      const check = document.querySelector(".check");
+      const title = document.querySelector(".title");
       const target = e.target;
+      const tr = target.closest("TR");
+      const del = document.querySelector(".delete");
       const seq = target.closest("TR").dataset.seq;
       if (target.tagName === "TD") {
         if (target.className == "modify") {
-          setModalOn(...modalOn, true);
+          setModalOn(true);
         } else if (target.className == "delete") {
           deleteList(seq);
         } else if (target.className == "title") {
-          target.closest("TR").style.textDecoration = "line-through";
+          title.classList.toggle("through");
+          modify.classList.toggle("display");
+          del.classList.toggle("display");
+          check.classList.toggle("display");
+        } else if (target.className == "title through") {
+          title.classList.toggle("through");
+          modify.classList.toggle("display");
+          del.classList.toggle("display");
+          check.classList.toggle("display");
         }
       }
     });

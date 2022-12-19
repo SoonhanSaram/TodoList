@@ -17,6 +17,7 @@ const ListInput = (props) => {
 
   const EnterHandler = (e) => {
     const key = e.key;
+
     console.log(key);
     if (key == "Enter") {
       ListAdd(todo);
