@@ -1,16 +1,17 @@
-import { Children } from "react";
-
-const Modal = () => {
+import "../css/modal.css";
+const Modal = (Children, show, onHide) => {
   return (
-    <div>
-      <header>
-        <h3>내용 수정하기</h3>
-        <button>&times;</button>
-      </header>
-      <div>{Children}</div>
-      <footer>
-        <button>닫기</button>
-      </footer>
+    <div className={show ? "Modal open" : "Modal"}>
+      <div>
+        <header>
+          <h3>내용 수정하기</h3>
+          <button onClick={onHide}>&times;</button>
+        </header>
+        <div></div>
+        <footer>
+          <button onClick={onHide}>닫기</button>
+        </footer>
+      </div>
     </div>
   );
 };

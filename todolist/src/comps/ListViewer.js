@@ -1,6 +1,6 @@
 import "../css/list.css";
 const ListViewer = (props) => {
-  const { todoList, deleteList } = props;
+  const { todoList, deleteList, setModalOn, modalOn } = props;
 
   const todoListView = todoList.map((todo) => {
     return (
@@ -20,7 +20,7 @@ const ListViewer = (props) => {
       const seq = target.closest("TR").dataset.seq;
       if (target.tagName === "TD") {
         if (target.className == "modify") {
-          alert("수정하시겠습니까?");
+          setModalOn(...modalOn, true);
         } else if (target.className == "delete") {
           deleteList(seq);
         } else if (target.className == "title") {
